@@ -56,4 +56,15 @@ financial_df_raw["ELEC_ID"] = financial_df_raw['YEAR'].astype(str) + "-"+ financ
 fin_cut_1 = financial_df_raw[financial_df_raw['STATE']!='00']
 fin_cut_1['ELEC-CAND'] = fin_cut_1["ELEC_ID"].astype(str) +"-"+ fin_cut_1["LAST_NAME"].astype(str)
 #filter out repeats in ELEC-CAND... may want to add some back because of last name issue
-fin_cut_2 = fin_cut_1[~fin_cut_1['ELEC-CAND'].isin(new_df.reset_index()['index'])]
+something = fin_cut_1['ELEC-CAND'].value_counts()
+something
+new_df = pd.DataFrame()
+new_df['filtered'] = something[something > 1]
+finance_df = fin_cut_1[~fin_cut_1['ELEC-CAND'].isin(new_df.reset_index()['index'])]
+finance_df
+
+'''
+for later consideration :
+mystery_df = fin_cut_1[fin_cut_1['ELEC-CAND'].isin(new_df.reset_index()['index'])]
+
+'''
