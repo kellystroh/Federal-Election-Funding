@@ -1,25 +1,27 @@
 %matplotlib inline
-
 import pandas as pd
 import numpy as np
 import scipy as sp
 import scipy.stats as stats
 import matplotlib.pyplot as plt
-
 plt.style.use('ggplot')
 
+# import House election results from 1976 to 2018 (CSV from Harvard Dataverse)
+# then delete data prior to 1980
 results_data_76to2018 = pd.read_csv('/Users/Kelly/galvanize/week4/Federal-Election-Funding/data/results-from-Dataverse/house1976-2018.csv', sep=',', header=0)
 results_data_80to18 = results_data_76to2018[results_data_76to2018['year']>1979]
+# import Senate election results from 1976 to 2018 (CSV from Harvard Dataverse)
+# then delete data prior to 1980
 senate_data = pd.read_csv('/Users/Kelly/galvanize/week4/Federal-Election-Funding/data/results-from-Dataverse/Senate/1976-2018-senate2.csv', sep=',', header=0)
 senate_data_80to18 = senate_data[senate_data['year']>1979]
 
 results_raw = pd.concat([senate_data_80to18, results_data_80to18], axis=0)
 
-#filter out primaries
+#filter out primaries (rows in which the value in column 'stage' does NOT equal 'gen')
 results_gen_elec1 = results_raw[results_raw['stage']=='gen']
-#filter out write ins
+#filter out write ins (rows in which the boolean value in column 'writein' does NOT equal False)
 results_gen_elec2 = results_gen_elec1[results_gen_elec1['writein']==False]
-#filter out special
+#filter out special (rows in which the boolean value in column 'special' does NOT equal False)
 results_gen_elec3 = results_gen_elec2[results_gen_elec2['special']==False]
 #add column for district string
 results_gen_elec3['district_str'] = results_gen_elec3['district'].apply(lambda x: str(x) if len(str(x))>1 else '0' + str(x))
@@ -53,6 +55,3 @@ mystery_repeats = results_gen_elec3[results_gen_elec3['elec-cand'].isin(repeats_
 results_GE = results_gen_elec3[~results_gen_elec3['elec-cand'].isin(repeats_df.reset_index()['index'])]
 # ready for merge? 
 results_GE
-
-
-
