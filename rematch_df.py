@@ -56,12 +56,6 @@ count_ttl
 
 rematch_cut = rematch_df_start[['FEC_ID','elec_id','year', 'candidate', 'candidatevotes', 'vote%', 'office', 'party', 'state', 'district','INC_STATUS','totalvotes', 'TTL_RECEIPTS', 'TTL_DISB']]
 
-rematch3 = rematch_cut[(~rematch_cut['delta_spend'].isna()) & (~rematch_cut['delta_vote'].isna())]
-rematch4 = rematch3[rematch3['delta_vote']!= 0]
-rematch4
-#I expected 1374; I got 1208 entries 
-# missing 166
-
 for i in range(len(rematch_list)):
     a = rematch_cut[rematch_cut['elec_id']==list(rematch_list[i])[0]].sort_values('FEC_ID').reset_index()
     b = rematch_cut[rematch_cut['elec_id']==list(rematch_list[i])[1]].sort_values('FEC_ID').reset_index()
