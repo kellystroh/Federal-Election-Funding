@@ -1,4 +1,4 @@
-%matplotlib inline
+
 import pandas as pd
 import numpy as np
 import scipy as sp
@@ -32,11 +32,12 @@ results_gen_elec3['elec_id'] = results_gen_elec3['year'].astype(str) +'-'+result
 
 
 #extract last name from candidate column (potential for error) & make new column
+nix_name = ['Sr', 'Sr.', 'Jr', 'Jr.', 'III', 'II']
 surname_series2 = results_gen_elec3['candidate'].apply(lambda x: x.split(' ')[-1].upper() if x.split(' ')[-1] not in nix_name else x.split(' ')[-2].upper())
 #strip trailing commas 
 results_gen_elec3['last_name'] = surname_series2.str.strip(',')
 #look for faulty entries, particularly among frequently occurring names  
-nix_name = ['Sr', 'Sr.', 'Jr', 'Jr.', 'III', 'II']
+
 surname_series = results_gen_elec3['candidate'].apply(lambda x: x.split(' ')[-1] if x.split(' ')[-1] not in nix_name else x.split(' ')[-2])
 # make list of all names that occur and remove bad entries ['Other', 'Vote/Scattering', 'scatter', 'Vote', ' ']
 # *** ' ' = likely due to flaw in code
