@@ -21,7 +21,12 @@ for each in mult_rematch_list:
     if len(each) not in mult_dict:
         mult_dict[len(each)] = []
     mult_dict[len(each)].append(each)
-mult_dict
+
+mult_dict[4]
 
 
+
+### print mult_dict counts
+for x in range(3,7):
+    print(f'Number of {x}-race rematches: ', len(mult_dict[x]))
 
